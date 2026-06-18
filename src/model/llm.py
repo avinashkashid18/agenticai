@@ -1,3 +1,5 @@
 from langchain_ollama import ChatOllama
 
-llm = ChatOllama(model="gpt-oss:120b-cloud")
+def get_llm():
+    llm = ChatOllama(model="gpt-oss:120b-cloud")
+    return llm
