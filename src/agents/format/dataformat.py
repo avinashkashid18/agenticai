@@ -1,7 +1,7 @@
 def format_response(result) -> str:
     messages = result.get("messages", []) if isinstance(result, dict) else []
     if not messages:
-        return "No response returned."
+        return "No response returned ."
 
     final_message = messages[-1]
     content = getattr(final_message, "content", final_message)
