@@ -1,19 +1,20 @@
 from langchain.agents import create_agent
 from model.llm import get_llm
+from dotenv import load_dotenv
 
 from tools.weather import check_weather
 from tools.calculator import calculate
-from dotenv import load_dotenv
+from format.dataformat import format_response
 from langchain_tavily import TavilySearch
-from langchain.tools import tool
 load_dotenv()
-tool = TavilySearch(
-    max_results=5,
+
+search_tool = TavilySearch(
+    max_results=3,
     topic="general"
 )
 llm = get_llm()
-agent = create_agent(model=llm, tools=[check_weather, calculate])
-inputs = {"messages": [("user", "what is addition of 50 and 30?")]}
+agent = create_agent(model=llm, tools=[check_weather, calculate, search_tool])
+inputs = {"messages": [("user", "Who is Sachin Tendulkar? and add 2 and 3")]}
 result = agent.invoke(inputs)
-print(result["messages"][-1].content)
-#print(result)
+print(result)
+print(format_response(result))
